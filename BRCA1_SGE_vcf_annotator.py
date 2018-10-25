@@ -4,37 +4,54 @@ from __future__ import print_function
 import sys
 import os
 import vcf
+import subprocess
+import datetime
 import pprint as pp
 
 """create a vcf file containing the BRCA1 SGE class for 3893 BRCA1 SNVs in the https://www.nature.com/articles/s41586-018-0461-z#Sec9"""
 
-def create_ref_tsv(excel_table):
+def create_ref_vcf(excel_table):
 
-	"""Create a reference .tsv file containing gene_name, transcript_id, chromosome number, genomic coordinate, ref allele, alt allele and SGE_class for each variant in the excel table"""
+	"""Create a BRCA1 reference .vcf file containing the BRCA1 SGE score (posterior probability) and class 
+	of 3893 BRCA1 SNVs in the https://www.nature.com/articles/s41586-018-0461-z#Sec9"""
 
-	gene_name = int()
-	chrom_num = int()
-	pos = int()
-	ref = int()
-	alt = int()
-	transcript_id = int()
-	SGE_class = int()
+	excel_table = os.path.abspath(excel_table)
 	ref_path = os.path.dirname(excel_table)
-	tsv_path = os.path.join(ref_path, "BRCA1_SGE_ref.tsv")
+	vcf_path = os.path.join(ref_path, "BRCA1_SGE_ref.vcf")
+
+	filedate = str(datetime.date.today())
+	filedate = "".join(filedate.split("-"))
+
+	# write header for the BRCA1_SGE_ref.vcf
+
+	with open(vcf_path, "w") as vcf_file:
+		vcf_file.writelines('##fileformat=VCFv4.0\n')
+		vcf_file.writelines('##fileDate={}\n'.format(filedate))
+		vcf_file.writelines('##reference=hg19\n')
+		vcf_file.writelines('##INFO=<ID=BRCA1_SGE,Number=.,Type=String,Description="BRCA1_SGE_score and BRCA1_SGE_class. Format: allele|score|class">\n')
+		vcf_file.writelines('#CHROM\tPOS\tID\tREF\tALT\tQUAL\tFILTER\tINFO\n')
+		print ('#CHROM\tPOS\tID\tREF\tALT\tQUAL\tFILTER\tINFO')
+
+	assert os.path.exists(vcf_path), "vcf reference file DO NOT exists"
+
+	# equate the data columns from excelsheet to the 8 fixed fields in vcf, CHROM=chromosome number, POS=position(hg19), ID=".", REF=ref, ALT=alt, QUAL=".", FILTER= ".", INFO= BRCA1=allele|score|class
 
 	with open(excel_table, "r") as SGE_table:
 
-		for index, line in enumerate(SGE_table):
+		lines = [line.split(',') for line in SGE_table]
 
-			fields = line.strip().split(",")
+		for index, fields in enumerate(lines):
 
-			if line.startswith("gene"):
-			
+			if index in [0, 1]:
+				continue
+
+		# sort excel_table according to genomic position
+
+			elif index >= 2:
+				
 				for column_index, field in enumerate(fields):
 
-					if field == "gene":
-						gene_name = column_index
-					elif field == "chromosome":
+					if field == "chromosome":
 						chrom_num = column_index
 					elif field == "position (hg19)":
 						pos = column_index
@@ -42,124 +59,100 @@ def create_ref_tsv(excel_table):
 						ref = column_index
 					elif field == "alt":
 						alt = column_index
-					elif field == "transcript_ID":
-						transcript_id = column_index
+					elif field == "p.nonfunctional":
+						SGE_score = column_index
 					elif field == "func.class":
 						SGE_class = column_index
 					else:
 						continue
 
-			elif "Variant ID" in line:
-				continue
+				CHROM = fields[chrom_num]
+				POS = fields[pos]
+				ID = "."
+				REF = fields[ref]
+				ALT = fields[alt]
+				QUAL = "."
+				FILTER = "."
+				score = fields[SGE_score]
+				func_class = fields[SGE_class]
+				BRCA1_SGE = "BRCA1={}|{}|{}".format(ALT, score, func_class)
 
-			elif "" in line:
-				continue
-						
+				# write each variant information for the BRCA1_SGE_ref.vcf file
+				with open(vcf_path, "a") as vcf_file:
+					vcf_file.writelines(CHROM + "\t" + POS + "\t" + ID + "\t" + REF + "\t" + ALT + "\t" + QUAL + "\t" + FILTER + "\t" + BRCA1_SGE + "\n")				
+					print(CHROM + "\t" + POS + "\t" + ID + "\t" + REF + "\t" + ALT + "\t" + QUAL + "\t" + FILTER + "\t" + BRCA1_SGE + "\n")
 			else:
-				with open(tsv_path, "a") as ref_tsv:
-					ref_tsv.writelines(fields[gene_name] + "\t" + fields[transcript_id] +"\t" +  fields[chrom_num] + "\t" + fields[pos] + "\t" + fields[ref] + "\t" + fields[alt] + "\t" + fields[SGE_class] + "\n")
-			
-	return tsv_path
-
-def pyvcf_objects_matching_json_ref(annotated_vcf, tsv_path):
+				break
 	
-	"""Query the annotated vcf file and return the pyvcf objects where a variant matches that which is found in the BRCA1_SGE_variants.tsv file."""
+	return vcf_path
 
-	# iterate through the variants in the annotated vcf and return the pyvcf objects that matches the profile of variants in the BRCA1_SGE_variants.tsv file
+def create_vcf_header(dir_path, vcf_path):
 
-	rf_path = os.path.dirname(annotated_vcf)
-	error_log = os.path.join(rf_path, "vcf_parse_error_log.txt")	
+	vcf_header = os.path.join(dir_path, ".hdr")
 
-	# open annotated vcf using vcr.Reader module
-
-	with open(annotated_vcf, "r") as vcf_file:
-
-		try: 
-			vcf_reader = vcf.Reader(vcf_file)
-
-		except (TypeError, ValueError, NameError, RuntimeError) as e:
-			with open(error_log, "a") as err_log:
-				err_log.writelines(e)
-
-	# identifying the index within the INFO meta_information field "CSQ" that indicate the transcript_id and gene_name
-
-	with open(annotated_vcf, "r") as vcf_file:
-		
+	with open (vcf_path, "r") as vcf_file:
 		for line in vcf_file:
-			
-			if line.startswith("##INFO=<ID=CSQ"):
-				fields = line.split(":")[-1].split("|")
-
-				for index, field in enumerate(fields):
-
-					if field == "RefSeq":
-						transcript_i = index
-					if field == "HGNC":
-						gene_i = index
-
-	variant_dict = {}
-	SGE_classes = []
-	BRCA1_variants_in_vcf = []
-
-	# parse the tsv file into a nested dictionary
-
-	with open(tsv_path) as ref_file:
-
-		for line in ref_file:
-			
-			fields = line.strip().split("\t")
-			print (fields)
-
-			if fields[-1] not in SGE_classes:
-				SGE_classes.append(fields[-1])
-
-			if fields[0] not in variant_dict.keys():
-				variant_dict[fields[0]] = {}
-
-			elif fields[0] in variant_dict.keys() and fields[1] not in variant_dict[fields[0]].keys():
-				variant_dict[fields[0]][fields[1]] = {}
-
-			elif fields[0] in variant_dict.keys() and fields[1] in variant_dict[fields[0]].keys() and fields[2] not in variant_dict[fields[0]][fields[1]].keys():
-				variant_dict[fields[0]][fields[1]][fields[2]] = {}
-
-			elif fields[0] in variant_dict.keys() and fields[1] in variant_dict[fields[0]].keys() and fields[2] in variant_dict[fields[0]][fields[1]].keys() and fields[3] not in variant_dict[fields[0]][fields[1]][fields[2]].keys():
-				variant_dict[fields[0]][fields[1]][fields[2]][fields[3]] = {}
-
-			elif fields[0] in variant_dict.keys() and fields[1] in variant_dict[fields[0]].keys() and fields[2] in variant_dict[fields[0]][fields[1]].keys() and fields[3] in variant_dict[fields[0]][fields[1]][fields[2]].keys() and fields[4] not in variant_dict[fields[0]][fields[1]][fields[2]][fields[3]].keys():
-				variant_dict[fields[0]][fields[1]][fields[2]][fields[3]][fields[4]] = {}
-
-			elif fields[0] in variant_dict.keys() and fields[1] in variant_dict[fields[0]].keys() and fields[2] in variant_dict[fields[0]][fields[1]].keys() and fields[3] in variant_dict[fields[0]][fields[1]][fields[2]].keys() and fields[4] in variant_dict[fields[0]][fields[1]][fields[2]][fields[3]].keys() and fields[5] not in variant_dict[fields[0]][fields[1]][fields[2]][fields[3]][fields[4]].keys():
-				variant_dict[fields[0]][fields[1]][fields[2]][fields[3]][fields[4]][fields[5]] = fields[6]
+			if line.startswith("##INFO=<ID=BRCA1_SGE_class"):
+				vcf_header = line
+				with open (vcf_header, "w+") as hdr:
+					hdr.writelines(line)
 			else:
-				continue
+				break
 
-	pp.pprint(variant_dict)
+	return vcf_header
 
-	for record in vcf_reader:
+def sort_bgzip_index(vcf_path):
 
-		for line in record.INFO["CSQ"]:
-			gene_name = line.split("|")[gene_i]
-			transcript_id = line.split("|")[transcript_i]
+	vcf_path = os.path.abspath(vcf_path)
+	assert os.path.exists(vcf_path), "vcf file DO NOT exist"
 
-			if variant_dict[gene_name][transcript_id][record.CHROM][record.POS][record.REF][record.ALT] in SGE_classes and record not in BRCA1_variants_in_vcf:
-				print (record.CHROM, record.POS, record.REF, record.ALT)
-				BRCA1_variants_in_vcf.append(record)
+	dir_path = os.path.dirname(vcf_path)
+	vcf_file = vcf_path.split("/")[-1]
 
-			else:
-				continue
+	bigzp_path = os.path.join(vcf_path, ".gz")
+	bigzp_file = bigzp_path.split("/")[-1]
+	tabix_path = os.path.join(bigzp_path, ".tbi")
+	tabix_file = tabix_path.split("/")[-1]
+	
+	files = os.listdir(dir_path)
 
-	return  (BRCA1_variants_in_vcf)
+	if not bigzp_file in files:
+		print ("create {}".format(bigzp_file))
+		create_bgzip = "cd {}; bgzip {}".format(dir_path, vcf_file)
+		subprocess.call(create_bgzip, shell=True)
 
-def main(annotated_vcf, excel_table):
+	if not tabix_file in files:
+		print ("create {}".format(tabix_file, shell=True))
+		create_tabix = "cd {}; tabix -p vcf {}".format(dir_path, vcf_file)
+		subprocess.call(create_tabix, shell=True)
+
+	return dir_path, bigzp_path, tabix_path
+
+def annotate_vcf(dir_path, bgzip_file, vcf_header, BRCA1_vcf,  vcf_file):
+	
+	vcf_dot = vcf_file.split("/")[-1].split(".")
+	for index, field in enumerate(vcf_dot):
+		if field == "annotated":
+			vcf_dot[index] = "BRCA1_annotated"
+
+	annotated_vcf = ".".join(vcf_dot)
+	print (annotated_vcf)
+
+	output_file = os.path.join(dir_path, annotated_vcf)
+	command = "cd {}; bcftools -a {} -h {} -c CHROM,POS,REF,ALT,INFO in.vcf.gz -o {}".format(dir_path, bgzip_file, vcf_header, output_file)
+	subprocess.call(command, shell=True)
+
+def main(excel_table, vcf_file):
 
 	# check that the annotated_vcf and excel_table exist as a data source
-	assert os.path.exists(annotated_vcf), "{} DO NOT exists".format(annotated_vcf)
-	assert os.path.exists(excel_table), "{} DO NOT exist".format(excel_table)
+	assert os.path.exists(vcf_file), "{} DO NOT exists".format(vcf_file)
+	assert os.path.exists(excel_table), "{} DO NOT exists".format(excel_table)
 
-	# create a list of vcf variants in the form of pyvcf objects
-	tsv_path = create_ref_tsv(excel_table)
+	# generate an artifical vcf from a tab delimited text file
+	BRCA1_vcf = create_ref_vcf(excel_table)
+	#dir_path, bgzip_file, tabix_path = sort_bgzip_index(BRCA1_vcf)
+	#vcf_header = create_vcf_header(dir_path, vcf_file)
+	#annotate_vcf(dir_path, bgzip_file, vcf_header, BRCA1_vcf, vcf_file)
 	
-	record_list = pyvcf_objects_matching_json_ref(annotated_vcf, tsv_path)
-
 if __name__ == "__main__":
 	main(sys.argv[1], sys.argv[2])
