@@ -1,14 +1,13 @@
-#!usr/bin/python2
+#!usr/bin/python3
 
-from __future__ import print_function
 import sys
 import os
-import vcf
 import subprocess
 import datetime
 import pprint as pp
 
 """create a vcf file containing the BRCA1 SGE class for 3893 BRCA1 SNVs in the https://www.nature.com/articles/s41586-018-0461-z#Sec9"""
+
 
 def create_ref_vcf(excel_table):
 
@@ -16,27 +15,29 @@ def create_ref_vcf(excel_table):
 	of 3893 BRCA1 SNVs in the https://www.nature.com/articles/s41586-018-0461-z#Sec9"""
 
 	excel_table = os.path.abspath(excel_table)
-	ref_path = os.path.dirname(excel_table)
-	vcf_path = os.path.join(ref_path, "BRCA1_SGE_ref.vcf")
+	supplementary_table_path = os.path.dirname(excel_table)
+	ref_vcf_path = os.path.join(supplementary_table_path, "BRCA1_SGE_ref.vcf")
 
 	filedate = str(datetime.date.today())
 	filedate = "".join(filedate.split("-"))
 
 	# write header for the BRCA1_SGE_ref.vcf
 
-	with open(vcf_path, "w") as vcf_file:
+	with open(ref_vcf_path, "w") as vcf_file:
 		vcf_file.writelines('##fileformat=VCFv4.0\n')
 		vcf_file.writelines('##fileDate={}\n'.format(filedate))
 		vcf_file.writelines('##reference=hg19\n')
+		vcf_file.writelines('##contig=<ID=17,length=81195210>\n')
 		vcf_file.writelines('##INFO=<ID=BRCA1_SGE,Number=.,Type=String,Description="BRCA1_SGE_score and BRCA1_SGE_class. Format: allele|score|class">\n')
 		vcf_file.writelines('#CHROM\tPOS\tID\tREF\tALT\tQUAL\tFILTER\tINFO\n')
-		print ('#CHROM\tPOS\tID\tREF\tALT\tQUAL\tFILTER\tINFO')
 
-	assert os.path.exists(vcf_path), "vcf reference file DO NOT exists"
+	assert os.path.exists(ref_vcf_path), "vcf reference file DO NOT exists"
 
 	# equate the data columns from excelsheet to the 8 fixed fields in vcf, CHROM=chromosome number, POS=position(hg19), ID=".", REF=ref, ALT=alt, QUAL=".", FILTER= ".", INFO= BRCA1=allele|score|class
 
 	with open(excel_table, "r") as SGE_table:
+
+		print ("generating BRCA1_ref_vcf")
 
 		lines = [line.split(',') for line in SGE_table]
 
@@ -66,81 +67,90 @@ def create_ref_vcf(excel_table):
 					else:
 						continue
 
-				CHROM = fields[chrom_num]
-				POS = fields[pos]
-				ID = "."
-				REF = fields[ref]
-				ALT = fields[alt]
-				QUAL = "."
-				FILTER = "."
-				score = fields[SGE_score]
-				func_class = fields[SGE_class]
-				BRCA1_SGE = "BRCA1={}|{}|{}".format(ALT, score, func_class)
+				if index > 2:
+					CHROM = fields[chrom_num]
+					POS = fields[pos]
+					ID = "."
+					REF = fields[ref]
+					ALT = fields[alt]
+					QUAL = "."
+					FILTER = "."
+					score = fields[SGE_score]
+					func_class = fields[SGE_class]
+					BRCA1_SGE = "{}|{}|{}".format(ALT, score, func_class)
 
-				# write each variant information for the BRCA1_SGE_ref.vcf file
-				with open(vcf_path, "a") as vcf_file:
-					vcf_file.writelines(CHROM + "\t" + POS + "\t" + ID + "\t" + REF + "\t" + ALT + "\t" + QUAL + "\t" + FILTER + "\t" + BRCA1_SGE + "\n")				
-					print(CHROM + "\t" + POS + "\t" + ID + "\t" + REF + "\t" + ALT + "\t" + QUAL + "\t" + FILTER + "\t" + BRCA1_SGE + "\n")
+					# write each variant information for the BRCA1_SGE_ref.vcf file
+					with open(ref_vcf_path, "a") as vcf_file:
+						vcf_file.writelines(CHROM + "\t" + POS + "\t" + ID + "\t" + REF + "\t" + ALT + "\t" + QUAL + "\t" + FILTER + "\t" + BRCA1_SGE + "\n")				
+		
 			else:
 				break
 	
-	return vcf_path
+	print ("BRCA1_ref_vcf generated")
+	return ref_vcf_path
 
-def create_vcf_header(dir_path, vcf_path):
 
-	vcf_header = os.path.join(dir_path, ".hdr")
+def create_vcf_header(vcf_path):
+
+	"""create a header file containing the reference vcf header"""
+
+	header_file = vcf_path + ".hdr"
 
 	with open (vcf_path, "r") as vcf_file:
 		for line in vcf_file:
-			if line.startswith("##INFO=<ID=BRCA1_SGE_class"):
-				vcf_header = line
-				with open (vcf_header, "w+") as hdr:
+			if line.startswith("##INFO=<ID=BRCA1_SGE"):
+				print ("finding header in vcf")
+				with open (header_file, "w") as hdr:
 					hdr.writelines(line)
 			else:
-				break
+				continue
+	print ("header file generated")
+	return header_file
 
-	return vcf_header
 
-def sort_bgzip_index(vcf_path):
+def sort_bgzip_index(ref_vcf):
 
-	vcf_path = os.path.abspath(vcf_path)
-	assert os.path.exists(vcf_path), "vcf file DO NOT exist"
+	"""sort the Data lines in the vcf according to CHROM and POS (numerically), compress the file into bgzip file format, and then index the .gz file"""
 
-	dir_path = os.path.dirname(vcf_path)
-	vcf_file = vcf_path.split("/")[-1]
+	ref_vcf = os.path.abspath(ref_vcf)
+	print (ref_vcf)
+	assert os.path.exists(ref_vcf), "vcf file DO NOT exist"
 
-	bigzp_path = os.path.join(vcf_path, ".gz")
-	bigzp_file = bigzp_path.split("/")[-1]
-	tabix_path = os.path.join(bigzp_path, ".tbi")
-	tabix_file = tabix_path.split("/")[-1]
-	
-	files = os.listdir(dir_path)
+	dir_path = os.path.dirname(ref_vcf)
+	vcf_file = ref_vcf.split("/")[-1]
+	print (vcf_file)
 
-	if not bigzp_file in files:
-		print ("create {}".format(bigzp_file))
-		create_bgzip = "cd {}; bgzip {}".format(dir_path, vcf_file)
-		subprocess.call(create_bgzip, shell=True)
+	bgzip_file = vcf_file + ".gz"
+	tabix_file = bgzip_file + ".tbi"
 
-	if not tabix_file in files:
-		print ("create {}".format(tabix_file, shell=True))
-		create_tabix = "cd {}; tabix -p vcf {}".format(dir_path, vcf_file)
-		subprocess.call(create_tabix, shell=True)
+	print ("change to current directory and sort {} according to CHROM and POS, and create {}".format(vcf_file, bgzip_file))
+	sort_bgzip = "cd {}; grep -v '#' {} | sort -k1,1n -k2,2n -t$'\t' | bgzip -c > {};".format(dir_path, vcf_file, bgzip_file)
+	subprocess.call(sort_bgzip, shell=True)
 
-	return dir_path, bigzp_path, tabix_path
+	print ("create {}".format(tabix_file))
+	create_tabix = "cd {}; tabix -p vcf {}".format(dir_path, bgzip_file)
+	subprocess.call(create_tabix, shell=True)
 
-def annotate_vcf(dir_path, bgzip_file, vcf_header, BRCA1_vcf,  vcf_file):
-	
-	vcf_dot = vcf_file.split("/")[-1].split(".")
-	for index, field in enumerate(vcf_dot):
-		if field == "annotated":
-			vcf_dot[index] = "BRCA1_annotated"
+	return dir_path, bgzip_file, tabix_file
 
-	annotated_vcf = ".".join(vcf_dot)
-	print (annotated_vcf)
 
-	output_file = os.path.join(dir_path, annotated_vcf)
-	command = "cd {}; bcftools -a {} -h {} -c CHROM,POS,REF,ALT,INFO in.vcf.gz -o {}".format(dir_path, bgzip_file, vcf_header, output_file)
+def annotate_vcf(dir_path, bgzip_file, vcf_header, BRCA1_ref_vcf, vcf_file):
+
+	"""using bcftools and add BRCA1_SGE annotation to the vcf_file, using dir_path, bgzip_file, vcf_header, BRCA1_vcf and vcf_file as arguments"""
+
+	vcf_file = str(vcf_file)
+
+	assert ".vcf" in vcf_file, "file DO NOT end with .vcf"
+
+	if ".annotated." in vcf_file:
+		annotated_vcf_file = vcf_file.replace(".annotated.", ".BRCA1_annotated.")
+	else:
+		annotated_vcf_file = vcf_file.replace(".vcf", ".BRCA1_annotated.vcf")
+
+	print ("create new vcf with additional BRCA1 annotation")
+	command = "cd {}; bcftools annotate -a {} -h {} -c CHROM,POS,ID,REF,ALT,QUAL,FILTER,'+INFO/BRCA1_SGE' -o {} {}".format(dir_path, bgzip_file, vcf_header, annotated_vcf_file, vcf_file)
 	subprocess.call(command, shell=True)
+
 
 def main(excel_table, vcf_file):
 
@@ -149,10 +159,16 @@ def main(excel_table, vcf_file):
 	assert os.path.exists(excel_table), "{} DO NOT exists".format(excel_table)
 
 	# generate an artifical vcf from a tab delimited text file
-	BRCA1_vcf = create_ref_vcf(excel_table)
-	#dir_path, bgzip_file, tabix_path = sort_bgzip_index(BRCA1_vcf)
-	#vcf_header = create_vcf_header(dir_path, vcf_file)
-	#annotate_vcf(dir_path, bgzip_file, vcf_header, BRCA1_vcf, vcf_file)
+	BRCA1_ref_vcf = create_ref_vcf(excel_table)
+	vcf_header = create_vcf_header(BRCA1_ref_vcf)
+	dir_path, bgzip_file, tabix_file = sort_bgzip_index(BRCA1_ref_vcf)
+	annotate_vcf(dir_path, bgzip_file, vcf_header, BRCA1_ref_vcf, vcf_file)
 	
 if __name__ == "__main__":
 	main(sys.argv[1], sys.argv[2])
+
+# navigate to where the script is located from command line, and enter "python3", then the name of the script "BRCA1_SGE_vcf_annotator.py"
+
+# followed by the absolute file path of the .csv table containing the BRCA1_SGE annotations - sys.argv[1]
+
+# and the absolute file path of the vcf you wish to annotate - sys.argv[2]
