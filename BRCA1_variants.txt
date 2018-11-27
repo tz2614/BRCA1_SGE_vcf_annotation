@@ -1,0 +1,309 @@
+comparing BRCA1_CP_v2.txt against BRCA1_SGE_ref.txt
+Sample C010490  contain BRCA1_SGE_variant 	 chr:17 	 41222975 	 C 	 T 
+
+Sample C010343  contain BRCA1_SGE_variant 	 chr:17 	 41222975 	 C 	 T 
+
+Sample C010505  contain BRCA1_SGE_variant 	 chr:17 	 41222975 	 C 	 T 
+
+Sample C010402  contain BRCA1_SGE_variant 	 chr:17 	 41197829 	 G 	 T 
+
+Sample C010043A  contain BRCA1_SGE_variant 	 chr:17 	 41222975 	 C 	 T 
+
+Sample C010043  contain BRCA1_SGE_variant 	 chr:17 	 41222975 	 C 	 T 
+
+Sample C010294  contain BRCA1_SGE_variant 	 chr:17 	 41222975 	 C 	 T 
+
+Sample C010301  contain BRCA1_SGE_variant 	 chr:17 	 41222975 	 C 	 T 
+
+Sample C010278  contain BRCA1_SGE_variant 	 chr:17 	 41222975 	 C 	 T 
+
+Sample C010103  contain BRCA1_SGE_variant 	 chr:17 	 41199671 	 T 	 C 
+
+Sample C010158  contain BRCA1_SGE_variant 	 chr:17 	 41267810 	 G 	 A 
+
+Sample C010154  contain BRCA1_SGE_variant 	 chr:17 	 41267740 	 T 	 G 
+
+Sample C010320  contain BRCA1_SGE_variant 	 chr:17 	 41222975 	 C 	 T 
+
+Sample C010316  contain BRCA1_SGE_variant 	 chr:17 	 41258474 	 T 	 C 
+
+Sample C010075  contain BRCA1_SGE_variant 	 chr:17 	 41222975 	 C 	 T 
+
+Sample C010061-1  contain BRCA1_SGE_variant 	 chr:17 	 41222975 	 C 	 T 
+
+Sample C010474  contain BRCA1_SGE_variant 	 chr:17 	 41222975 	 C 	 T 
+
+Sample C010462  contain BRCA1_SGE_variant 	 chr:17 	 41222975 	 C 	 T 
+
+Sample C010061  contain BRCA1_SGE_variant 	 chr:17 	 41222975 	 C 	 T 
+
+Sample C010429  contain BRCA1_SGE_variant 	 chr:17 	 41267755 	 T 	 C 
+
+Sample C010441  contain BRCA1_SGE_variant 	 chr:17 	 41222975 	 C 	 T 
+
+Sample C010265  contain BRCA1_SGE_variant 	 chr:17 	 41222946 	 A 	 C 
+
+Sample C010515  contain BRCA1_SGE_variant 	 chr:17 	 41201162 	 C 	 T 
+
+Sample C010533  contain BRCA1_SGE_variant 	 chr:17 	 41222975 	 C 	 T 
+
+Sample C010537B  contain BRCA1_SGE_variant 	 chr:17 	 41222993 	 G 	 T 
+
+Sample C010554  contain BRCA1_SGE_variant 	 chr:17 	 41276072 	 G 	 A 
+
+Sample C010592  contain BRCA1_SGE_variant 	 chr:17 	 41222975 	 C 	 T 
+
+Sample C010652  contain BRCA1_SGE_variant 	 chr:17 	 41222975 	 C 	 T 
+
+Sample C010654  contain BRCA1_SGE_variant 	 chr:17 	 41222975 	 C 	 T 
+
+Sample C010690  contain BRCA1_SGE_variant 	 chr:17 	 41219619 	 G 	 C 
+
+Sample C010695  contain BRCA1_SGE_variant 	 chr:17 	 41222975 	 C 	 T 
+
+Sample C010754  contain BRCA1_SGE_variant 	 chr:17 	 41222975 	 C 	 T 
+
+Sample C011406  contain BRCA1_SGE_variant 	 chr:17 	 41222975 	 C 	 T 
+
+Sample C011462  contain BRCA1_SGE_variant 	 chr:17 	 41222975 	 C 	 T 
+
+Sample C011490  contain BRCA1_SGE_variant 	 chr:17 	 41276129 	 T 	 C 
+
+Sample C011496W  contain BRCA1_SGE_variant 	 chr:17 	 41276034 	 C 	 A 
+
+Sample C011486AW  contain BRCA1_SGE_variant 	 chr:17 	 41197826 	 A 	 G 
+
+Sample C011485BW  contain BRCA1_SGE_variant 	 chr:17 	 41197729 	 T 	 C 
+
+Sample C011497  contain BRCA1_SGE_variant 	 chr:17 	 41267810 	 G 	 A 
+
+Sample C011487AW  contain BRCA1_SGE_variant 	 chr:17 	 41199714 	 G 	 T 
+
+Sample C011487B  contain BRCA1_SGE_variant 	 chr:17 	 41276129 	 T 	 C 
+
+Sample C011486D  contain BRCA1_SGE_variant 	 chr:17 	 41276055 	 T 	 C 
+
+Sample C011488W  contain BRCA1_SGE_variant 	 chr:17 	 41219652 	 C 	 T 
+
+Sample C011523  contain BRCA1_SGE_variant 	 chr:17 	 41197806 	 C 	 T 
+
+Sample C011537  contain BRCA1_SGE_variant 	 chr:17 	 41222975 	 C 	 T 
+
+Sample C011552W  contain BRCA1_SGE_variant 	 chr:17 	 41256908 	 A 	 G 
+
+Sample C011553  contain BRCA1_SGE_variant 	 chr:17 	 41222975 	 C 	 T 
+
+Sample C011595W  contain BRCA1_SGE_variant 	 chr:17 	 41276089 	 C 	 A 
+
+Sample C011597  contain BRCA1_SGE_variant 	 chr:17 	 41209094 	 C 	 T 
+
+Sample C011593  contain BRCA1_SGE_variant 	 chr:17 	 41222975 	 C 	 T 
+
+Sample C011629  contain BRCA1_SGE_variant 	 chr:17 	 41199671 	 T 	 C 
+
+Sample C011623  contain BRCA1_SGE_variant 	 chr:17 	 41222975 	 C 	 T 
+
+Sample C011647  contain BRCA1_SGE_variant 	 chr:17 	 41209139 	 A 	 G 
+
+Sample C011647  contain BRCA1_SGE_variant 	 chr:17 	 41222975 	 C 	 T 
+
+Sample C011651  contain BRCA1_SGE_variant 	 chr:17 	 41203065 	 C 	 G 
+
+Sample C011679W  contain BRCA1_SGE_variant 	 chr:17 	 41199691 	 T 	 C 
+
+Sample C011684  contain BRCA1_SGE_variant 	 chr:17 	 41215346 	 T 	 C 
+
+Sample C011677  contain BRCA1_SGE_variant 	 chr:17 	 41267810 	 G 	 A 
+
+Sample C011683  contain BRCA1_SGE_variant 	 chr:17 	 41201198 	 C 	 T 
+
+Sample C011683  contain BRCA1_SGE_variant 	 chr:17 	 41219689 	 T 	 C 
+
+Sample C011667  contain BRCA1_SGE_variant 	 chr:17 	 41222975 	 C 	 T 
+
+Sample C011667  contain BRCA1_SGE_variant 	 chr:17 	 41197763 	 C 	 T 
+
+Sample C011710W  contain BRCA1_SGE_variant 	 chr:17 	 41215912 	 T 	 C 
+
+Sample C011697  contain BRCA1_SGE_variant 	 chr:17 	 41219639 	 A 	 C 
+
+Sample C011717  contain BRCA1_SGE_variant 	 chr:17 	 41222975 	 C 	 T 
+
+Sample C011723W  contain BRCA1_SGE_variant 	 chr:17 	 41276032 	 A 	 G 
+
+Sample C011730  contain BRCA1_SGE_variant 	 chr:17 	 41222975 	 C 	 T 
+
+Sample C011760W  contain BRCA1_SGE_variant 	 chr:17 	 41256975 	 T 	 C 
+
+Sample C011790  contain BRCA1_SGE_variant 	 chr:17 	 41222975 	 C 	 T 
+
+Sample C011793  contain BRCA1_SGE_variant 	 chr:17 	 41222975 	 C 	 T 
+
+Sample C011796  contain BRCA1_SGE_variant 	 chr:17 	 41222975 	 C 	 T 
+
+Sample C011827  contain BRCA1_SGE_variant 	 chr:17 	 41215368 	 T 	 C 
+
+Sample C011881W  contain BRCA1_SGE_variant 	 chr:17 	 41199685 	 G 	 A 
+
+Sample C011828  contain BRCA1_SGE_variant 	 chr:17 	 41222975 	 C 	 T 
+
+Sample C011868  contain BRCA1_SGE_variant 	 chr:17 	 41222975 	 C 	 T 
+
+Sample C011895  contain BRCA1_SGE_variant 	 chr:17 	 41197829 	 G 	 T 
+
+Sample C011897  contain BRCA1_SGE_variant 	 chr:17 	 41222975 	 C 	 T 
+
+Sample C011934  contain BRCA1_SGE_variant 	 chr:17 	 41222967 	 G 	 A 
+
+Sample C011948  contain BRCA1_SGE_variant 	 chr:17 	 41222975 	 C 	 T 
+
+Sample C011978  contain BRCA1_SGE_variant 	 chr:17 	 41222975 	 C 	 T 
+
+Sample C012000W  contain BRCA1_SGE_variant 	 chr:17 	 41209078 	 C 	 T 
+
+Sample C011945A  contain BRCA1_SGE_variant 	 chr:17 	 41209073 	 C 	 A 
+
+Sample C011970B  contain BRCA1_SGE_variant 	 chr:17 	 41219629 	 T 	 C 
+
+Sample C012090  contain BRCA1_SGE_variant 	 chr:17 	 41222975 	 C 	 T 
+
+Sample C012102  contain BRCA1_SGE_variant 	 chr:17 	 41209109 	 T 	 G 
+
+Sample C012116  contain BRCA1_SGE_variant 	 chr:17 	 41222975 	 C 	 T 
+
+Sample C012148W  contain BRCA1_SGE_variant 	 chr:17 	 41199661 	 A 	 G 
+
+Sample C012132  contain BRCA1_SGE_variant 	 chr:17 	 41222975 	 C 	 T 
+
+Sample C012172W  contain BRCA1_SGE_variant 	 chr:17 	 41276081 	 T 	 C 
+
+Sample C012149  contain BRCA1_SGE_variant 	 chr:17 	 41256978 	 A 	 C 
+
+Sample C012188W  contain BRCA1_SGE_variant 	 chr:17 	 41199649 	 A 	 T 
+
+Sample C012201  contain BRCA1_SGE_variant 	 chr:17 	 41199671 	 T 	 C 
+
+Sample C012301W  contain BRCA1_SGE_variant 	 chr:17 	 41276135 	 T 	 C 
+
+Sample C012333  contain BRCA1_SGE_variant 	 chr:17 	 41256927 	 A 	 C 
+
+Sample C012318  contain BRCA1_SGE_variant 	 chr:17 	 41222975 	 C 	 T 
+
+Sample C012328AW  contain BRCA1_SGE_variant 	 chr:17 	 41256961 	 T 	 C 
+
+Sample C012357W  contain BRCA1_SGE_variant 	 chr:17 	 41215977 	 T 	 C 
+
+Sample C012392  contain BRCA1_SGE_variant 	 chr:17 	 41219639 	 A 	 C 
+
+Sample C012432p  contain BRCA1_SGE_variant 	 chr:17 	 41197739 	 G 	 A 
+
+Sample C012432p  contain BRCA1_SGE_variant 	 chr:17 	 41267796 	 A 	 G 
+
+Sample C012442b  contain BRCA1_SGE_variant 	 chr:17 	 41222975 	 C 	 T 
+
+Sample C012458b  contain BRCA1_SGE_variant 	 chr:17 	 41222975 	 C 	 T 
+
+Sample C012459b  contain BRCA1_SGE_variant 	 chr:17 	 41222975 	 C 	 T 
+
+Sample C012481W  contain BRCA1_SGE_variant 	 chr:17 	 41276090 	 A 	 G 
+
+Sample C012469b  contain BRCA1_SGE_variant 	 chr:17 	 41222975 	 C 	 T 
+
+Sample C012520bW  contain BRCA1_SGE_variant 	 chr:17 	 41215357 	 A 	 G 
+
+Sample C012521bW  contain BRCA1_SGE_variant 	 chr:17 	 41276131 	 A 	 G 
+
+Sample C012541p  contain BRCA1_SGE_variant 	 chr:17 	 41256960 	 T 	 C 
+
+Sample C012552b  contain BRCA1_SGE_variant 	 chr:17 	 41222975 	 C 	 T 
+
+Sample C012574W  contain BRCA1_SGE_variant 	 chr:17 	 41209129 	 A 	 G 
+
+Sample C012554b  contain BRCA1_SGE_variant 	 chr:17 	 41222975 	 C 	 T 
+
+Sample C012685B  contain BRCA1_SGE_variant 	 chr:17 	 41197829 	 G 	 T 
+
+Sample C012814BW  contain BRCA1_SGE_variant 	 chr:17 	 41215379 	 A 	 G 
+
+Sample C012805BW  contain BRCA1_SGE_variant 	 chr:17 	 41197770 	 C 	 A 
+
+Sample C012834P  contain BRCA1_SGE_variant 	 chr:17 	 41209162 	 A 	 G 
+
+Sample C012841P  contain BRCA1_SGE_variant 	 chr:17 	 41276032 	 A 	 G 
+
+Sample C012862B  contain BRCA1_SGE_variant 	 chr:17 	 41222975 	 C 	 T 
+
+Sample C012895b  contain BRCA1_SGE_variant 	 chr:17 	 41222975 	 C 	 T 
+
+Sample C012901b  contain BRCA1_SGE_variant 	 chr:17 	 41222975 	 C 	 T 
+
+Sample C012901b  contain BRCA1_SGE_variant 	 chr:17 	 41222976 	 A 	 T 
+
+Sample C012901p  contain BRCA1_SGE_variant 	 chr:17 	 41209134 	 C 	 T 
+
+Sample C012917Wb  contain BRCA1_SGE_variant 	 chr:17 	 41276087 	 T 	 C 
+
+Sample C012902b  contain BRCA1_SGE_variant 	 chr:17 	 41222975 	 C 	 T 
+
+Sample C012928B  contain BRCA1_SGE_variant 	 chr:17 	 41222975 	 C 	 T 
+
+Sample C012942b  contain BRCA1_SGE_variant 	 chr:17 	 41267810 	 G 	 A 
+
+Sample C012933b  contain BRCA1_SGE_variant 	 chr:17 	 41222975 	 C 	 T 
+
+Sample C013000WP  contain BRCA1_SGE_variant 	 chr:17 	 41199710 	 G 	 A 
+
+Sample C012980B  contain BRCA1_SGE_variant 	 chr:17 	 41222975 	 C 	 T 
+
+Sample C012981B  contain BRCA1_SGE_variant 	 chr:17 	 41222975 	 C 	 T 
+
+Sample C012944P  contain BRCA1_SGE_variant 	 chr:17 	 41276082 	 A 	 G 
+
+Sample C012974B  contain BRCA1_SGE_variant 	 chr:17 	 41222975 	 C 	 T 
+
+Sample C013081b  contain BRCA1_SGE_variant 	 chr:17 	 41222975 	 C 	 T 
+
+Sample C013136b  contain BRCA1_SGE_variant 	 chr:17 	 41203148 	 G 	 C 
+
+Sample C013152B  contain BRCA1_SGE_variant 	 chr:17 	 41222975 	 C 	 T 
+
+Sample C013184b  contain BRCA1_SGE_variant 	 chr:17 	 41215403 	 T 	 C 
+
+Sample C013218b  contain BRCA1_SGE_variant 	 chr:17 	 41215926 	 C 	 T 
+
+Sample C013261p  contain BRCA1_SGE_variant 	 chr:17 	 41203145 	 A 	 G 
+
+Sample C013254b  contain BRCA1_SGE_variant 	 chr:17 	 41222975 	 C 	 T 
+
+Sample C013245  contain BRCA1_SGE_variant 	 chr:17 	 41222975 	 C 	 T 
+
+Sample C013245  contain BRCA1_SGE_variant 	 chr:17 	 41222979 	 G 	 T 
+
+Sample C013246  contain BRCA1_SGE_variant 	 chr:17 	 41215398 	 G 	 T 
+
+Sample C013246  contain BRCA1_SGE_variant 	 chr:17 	 41222986 	 T 	 C 
+
+Sample C013250W  contain BRCA1_SGE_variant 	 chr:17 	 41223017 	 T 	 C 
+
+Sample C013247  contain BRCA1_SGE_variant 	 chr:17 	 41201153 	 T 	 C 
+
+Sample C013247  contain BRCA1_SGE_variant 	 chr:17 	 41223001 	 C 	 A 
+
+Sample C013278B  contain BRCA1_SGE_variant 	 chr:17 	 41267763 	 C 	 T 
+
+Sample C013325b  contain BRCA1_SGE_variant 	 chr:17 	 41222975 	 C 	 T 
+
+Sample C013401B  contain BRCA1_SGE_variant 	 chr:17 	 41222975 	 C 	 T 
+
+Sample C013404p  contain BRCA1_SGE_variant 	 chr:17 	 41222960 	 C 	 A 
+
+Sample C013469bW  contain BRCA1_SGE_variant 	 chr:17 	 41197735 	 T 	 C 
+
+Sample C013506b  contain BRCA1_SGE_variant 	 chr:17 	 41222975 	 C 	 T 
+
+Sample C013532b  contain BRCA1_SGE_variant 	 chr:17 	 41267808 	 G 	 C 
+
+Sample C013539b  contain BRCA1_SGE_variant 	 chr:17 	 41222975 	 C 	 T 
+
+Sample C013560b  contain BRCA1_SGE_variant 	 chr:17 	 41197784 	 G 	 A 
+
