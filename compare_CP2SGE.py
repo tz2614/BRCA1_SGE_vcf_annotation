@@ -6,7 +6,7 @@ import subprocess
 import datetime
 import pprint as pp
 
-"""create a script that checks which CP samples contain BRCA1 variants in the supplementary table 1 excel spreadsheet"""
+"""create a script that checks which CP samples contain BRCA1 variants in the BRCA1_SGE excel spreadsheet"""
 
 
 def create_BRCA1_SGE_ref_txt(csv_file):

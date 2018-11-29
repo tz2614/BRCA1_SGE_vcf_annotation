@@ -32,7 +32,7 @@ def sort_bgzip_index(ref_vcf):
 	print (ref_vcf)
 	assert os.path.exists(ref_vcf), "vcf file DO NOT exist"
 
-	dir_path = os.path.dirname(ref_vcf)
+	ref_dir = os.path.dirname(ref_vcf)
 	vcf_file = ref_vcf.split("/")[-1]
 	print (vcf_file)
 
@@ -40,19 +40,19 @@ def sort_bgzip_index(ref_vcf):
 	tabix_file = bgzip_file + ".tbi"
 
 	print ("change to current directory and sort {} according to CHROM and POS, and create {}".format(vcf_file, bgzip_file))
-	sort_bgzip = "cd {}; grep -v '#' {} | sort -k1,1n -k2,2n -t$'\t' | bgzip -c > {};".format(dir_path, vcf_file, bgzip_file)
+	sort_bgzip = "cd {}; grep -v '#' {} | sort -k1,1n -k2,2n -t$'\t' | bgzip -c > {};".format(ref_dir, vcf_file, bgzip_file)
 	subprocess.call(sort_bgzip, shell=True)
 
 	print ("create {}".format(tabix_file))
-	create_tabix = "cd {}; tabix -p vcf {}".format(dir_path, bgzip_file)
+	create_tabix = "cd {}; tabix -p vcf {}".format(ref_dir, bgzip_file)
 	subprocess.call(create_tabix, shell=True)
 
-	return dir_path, bgzip_file, tabix_file
+	return ref_dir, bgzip_file, tabix_file
 
 
-def annotate_vcf(dir_path, bgzip_file, vcf_header, BRCA1_ref_vcf, vcf_file):
+def annotate_vcf(ref_path, bgzip_file, vcf_header, BRCA1_ref_vcf, vcf_file):
 
-	"""using bcftools and add BRCA1_SGE annotation to the vcf_file, using dir_path, bgzip_file, vcf_header, BRCA1_vcf and vcf_file as arguments"""
+	"""using bcftools and add BRCA1_SGE annotation to the vcf_file, using ref_dir, bgzip_file, vcf_header, BRCA1_vcf and vcf_file as arguments"""
 
 	vcf_file = str(vcf_file)
 
@@ -64,27 +64,28 @@ def annotate_vcf(dir_path, bgzip_file, vcf_header, BRCA1_ref_vcf, vcf_file):
 		annotated_vcf_file = vcf_file.replace(".vcf", ".BRCA1_annotated.vcf")
 
 	print ("create new vcf with additional BRCA1 annotation")
-	command = "cd {}; bcftools annotate -a {} -h {} -c CHROM,POS,ID,REF,ALT,QUAL,FILTER,'+INFO/BRCA1_SGE' -o {} {}".format(dir_path, bgzip_file, vcf_header, annotated_vcf_file, vcf_file)
+	command = "cd {}; bcftools annotate -a {} -h {} -c CHROM,POS,ID,REF,ALT,QUAL,FILTER,'+INFO/BRCA1_SGE' -o {} {}".format(ref_path, bgzip_file, vcf_header, annotated_vcf_file, vcf_file)
 	subprocess.call(command, shell=True)
 
+	return annotated_vcf_file
 
-def main(excel_table, vcf_file):
+def main(ref_vcf, vcf_file):
 
-	# check that the annotated_vcf and excel_table exist as a data source
-	assert os.path.exists(vcf_file), "{} DO NOT exists".format(vcf_file)
-	assert os.path.exists(excel_table), "{} DO NOT exists".format(excel_table)
+	# check that the ref_vcf and excel_table exist as a data source
+	assert os.path.exists(ref_vcf), "{} DO NOT exists".format(ref_vcf)
 
-	# generate an artifical vcf from a tab delimited text file
-	BRCA1_ref_vcf = BRCA1_SGE_ref.create_ref_vcf(excel_table)
-	vcf_header = create_vcf_header(BRCA1_ref_vcf)
-	dir_path, bgzip_file, tabix_file = sort_bgzip_index(BRCA1_ref_vcf)
-	annotate_vcf(dir_path, bgzip_file, vcf_header, BRCA1_ref_vcf, vcf_file)
+	# use BRCA1_SGE_ref.vcf as reference file containing all the BRCA1_SGE variants to annotate new vcf
+	vcf_header = create_vcf_header(ref_vcf)
+	ref_dir, bgzip_file, tabix_file = sort_bgzip_index(ref_vcf)
+	annotate_vcf(ref_dir, bgzip_file, vcf_header, ref_vcf, vcf_file)
 	
 if __name__ == "__main__":
 	main(sys.argv[1], sys.argv[2])
 
-# navigate to where the script is located from command line, and enter "python3", then the name of the script "BRCA1_SGE_vcf_annotator.py"
+# navigate to where the script is located from command line, and enter "python3", 
 
-# followed by the absolute file path of the .csv table containing the BRCA1_SGE annotations - sys.argv[1]
+# the name of the script "BRCA1_SGE_vcf_annotator.py"
 
-# and the absolute file path of the vcf you wish to annotate - sys.argv[2]
+# the BRCA1_SGE_ref.vcf
+
+# and the file path of the vcf you wish to annotate - sys.argv[1]

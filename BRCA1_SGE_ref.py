@@ -29,17 +29,12 @@ def create_ref_vcf(excel_table):
 		vcf_file.writelines('##contig=<ID=17,length=81195210>\n')
 		vcf_file.writelines('##INFO=<ID=BRCA1_SGE,Number=.,Type=String,Description="BRCA1_SGE_score and BRCA1_SGE_class. Format: allele|score|class">\n')
 		vcf_file.writelines('#CHROM\tPOS\tID\tREF\tALT\tQUAL\tFILTER\tINFO\n')
-
-	if os.path.exists(ref_vcf_path):
-		return ref_vcf_path
-	else:
-		continue
-
+		
 	# equate the data columns from excelsheet to the 8 fixed fields in vcf, CHROM=chromosome number, POS=position(hg19), ID=".", REF=ref, ALT=alt, QUAL=".", FILTER= ".", INFO= BRCA1=allele|score|class
 
 	with open(excel_table, "r") as SGE_table:
 
-		print ("generating BRCA1_ref_vcf")
+		print ("generating {}".format(ref_vcf_path))
 
 		lines = [line.split(',') for line in SGE_table]
 
@@ -77,7 +72,7 @@ def create_ref_vcf(excel_table):
 					ALT = fields[alt]
 					QUAL = "."
 					FILTER = "."
-					score = fields[SGE_score]
+					score = float(str(fields[SGE_score]))
 					func_class = fields[SGE_class]
 					BRCA1_SGE = "{}|{}|{}".format(ALT, score, func_class)
 
@@ -88,8 +83,9 @@ def create_ref_vcf(excel_table):
 			else:
 				break
 	
-	print ("BRCA1_ref_vcf generated")
+	print ("{} generated".format(ref_vcf_path))
 	return ref_vcf_path
+
 
 def main(excel_table):
 
@@ -100,7 +96,7 @@ def main(excel_table):
 	BRCA1_ref_vcf = create_ref_vcf(excel_table)
 	
 if __name__ == "__main__":
-	main(sys.argv[1], sys.argv[2])
+	main(sys.argv[1])
 
 # navigate to where the script is located from command line, and enter
 
