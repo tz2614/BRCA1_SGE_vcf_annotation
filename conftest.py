@@ -28,11 +28,11 @@ ref_vcf_hdr = "BRCA1_SGE_ref.vcf.hdr"
 # declare current directory
 current_directory = os.getcwd()
 
-# new directories to be created for test modules
-
 """this checks whether the user has read/write permission to the current directory where the test directory will be stored"""
 assert os.access((current_directory), os.W_OK), "NO write permission for {}".format(current_directory)
 assert os.access((current_directory), os.R_OK), "NO read permission for {}".format(current_directory)
+
+# new directories to be created for test modules
 test_vcf_dir = os.path.abspath(os.path.join(current_directory, "pytest_BRCA1_vcf")) # temp directory to store all test vcf and BRCA1_annotated.vcf
 test_work_dir = os.path.abspath(os.path.join(current_directory, "pytest_work")) # temp directory to store BRCA1_SGES_ref.csv/hdr files
 
