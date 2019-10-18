@@ -7,7 +7,7 @@ import shutil
 
 # directories containing test datasets for the BRCA1_SGE_vcf_annotator program
 BRCA1_rf_path = "/mnt/storage/home/zhengt/Competencies/CBI-6_Advanced_Clinical_Bioinformatics/BRCA1_SGE_variant_annotation/BRCA1_test/"
-working_files_dir = "/mnt/storage/home/zhengt/Competencies/CBI-6_Advanced_Clinical_Bioinformatics/BRCA1_SGE_variant_annotation/"
+working_files_dir = "/mnt/storage/home/zhengt/Competencies/CBI-6_Advanced_Clinical_Bioinformatics/BRCA1_SGE_variant_annotation/data/"
 
 # vcf filenames used within the test directories
 pos_vcf_filename = "pos_variants.vcf"
@@ -33,10 +33,10 @@ assert os.access((current_directory), os.W_OK), "NO write permission for {}".for
 assert os.access((current_directory), os.R_OK), "NO read permission for {}".format(current_directory)
 
 # new directories to be created for test modules
-test_vcf_dir = os.path.abspath(os.path.join(current_directory, "pytest_BRCA1_vcf")) # temp directory to store all test vcf and BRCA1_annotated.vcf
-test_work_dir = os.path.abspath(os.path.join(current_directory, "pytest_work")) # temp directory to store BRCA1_SGES_ref.csv/hdr files
+test_vcf_dir = os.path.abspath(os.path.join(working_files_dir, "pytest_BRCA1_vcf")) # temp directory to store all test vcf and BRCA1_annotated.vcf
+test_work_dir = os.path.abspath(os.path.join(working_files_dir, "pytest_work")) # temp directory to store BRCA1_SGES_ref.csv/hdr files
 
-@pytest.fixture(scope="function")
+@pytest.fixture(scope="module")
 def create_test_vcfs_dir():
 
 	"""
@@ -65,7 +65,7 @@ def create_test_vcfs_dir():
 	shutil.rmtree(test_vcf_dir)
 
 
-@pytest.fixture(scope="function")
+@pytest.fixture(scope="module")
 def create_test_work_dir():
 
 	"""
