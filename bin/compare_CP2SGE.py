@@ -73,7 +73,7 @@ def get_list_of_C01_vcfs(runfolder):
 
 	for (dirpath, dirnames, filenames) in os.walk(runfolder):
 		for filename in filenames:
-			if filename.endswith(".vcf"):
+			if filename.endswith(".vcf") and filename.startswith("C01"):
 				if filename not in vcf_list:
 					vcf_list.extend(filenames)
 				else:
