@@ -66,11 +66,11 @@ def create_BRCA1_SGE_dict(csv_file, output=None):
 					BRCA1_SGE_dict[CHROM][POS][REF].append(ALT)
 
 	
-	#print ("BRCA1_SGE_dict generated")
+	print ("BRCA1_SGE_dict generated")
 
-	pp.pprint(BRCA1_SGE_dict)
+	#pp.pprint(BRCA1_SGE_dict)
 	if output:
-		with open(output, "a") as output_file:
+		with open(output, "w+") as output_file:
 			json.dump(BRCA1_SGE_dict, output_file)
 	return BRCA1_SGE_dict
 
@@ -98,36 +98,36 @@ def compare_BRCA1_SGE_to_vcf(vcf_list, BRCA1_SGE_dict, output=None):
 	for vcf_file in vcf_list:
 
 		# check each vcf record against the BRCA1_SGE_dict
+
+		vcf_records = []
 	
 		vcf_data = vcf.Reader(open(vcf_file, "rb"))
 		
 		if vcf_file not in C01_sample_SGE_dict.keys():
-			vcf_records = []
+			C01_sample_SGE_dict[vcf_file] = vcf_records
 
 		print ("analysing {}".format(vcf_file))
 
 		for record in vcf_data:
-			try:
-				if not record.CHROM in BRCA1_SGE_dict.keys():
-					continue
-				if not record.POS in BRCA1_SGE_dict[record.CHROM].keys():
-					continue
-				if not record.REF in BRCA1_SGE_dict[record.CHROM][record.POS].keys():
-					continue
-				if record.ALT[0] in BRCA1_SGE_dict[record.CHROM][record.POS][record.REF].values():
-					vcf_records.append(record)
+			if not str(record.CHROM) in BRCA1_SGE_dict.keys():
+				continue
+			elif not str(record.POS) in BRCA1_SGE_dict[str(record.CHROM)].keys():
+				continue
+			elif not str(record.REF) in BRCA1_SGE_dict[str(record.CHROM)][str(record.POS)].keys():
+				continue
+			else:
+				if str(record.ALT[0]) in BRCA1_SGE_dict[str(record.CHROM)][str(record.POS)][str(record.REF)]:
+					vcf_records.append(str(record))
 					print "%s contain the following BRCA1_SGE_variants:" % vcf_file
-					print record
+					print str(record)
 				else:
 					continue
-					 				
-			except KeyError:
-				continue
 
 		C01_sample_SGE_dict[vcf_file] = vcf_records
-		if output:
-			with open (output, "a") as output_file:
-				json.dump(C01_sample_SGE_dict[vcf_file], output_file)
+	
+	if output:
+		with open (output, "w+") as output_file:
+			json.dump(C01_sample_SGE_dict, output_file)
 
 	print C01_sample_SGE_dict.keys()
 	return output_file
@@ -144,4 +144,4 @@ def main(runfolder, csv_file, SGE_dict_file, C01sample_file):
 if __name__ == "__main__":
 	main(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
 
-	"""sys.argv1 = /path/to/CP runfolder, sys.argv2 = supplementary table 1.csv, sys.argv[3] = BRCA1_SGE_file, sys.argv[4] = C01sample_file"""
+	"""sys.argv1 = /path/to/CP runfolder, sys.argv2 = supplementary table 1.csv, sys.argv[3] = BRCA1_SGE_dict_file, sys.argv[4] = C01sample_file"""
