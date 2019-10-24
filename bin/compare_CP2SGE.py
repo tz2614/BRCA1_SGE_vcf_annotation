@@ -118,18 +118,20 @@ def compare_BRCA1_SGE_to_vcf(vcf_list, BRCA1_SGE_dict, output=None):
 			else:
 				if str(record.ALT[0]) in BRCA1_SGE_dict[str(record.CHROM)][str(record.POS)][str(record.REF)]:
 					vcf_records.append(str(record))
+					C01_sample_SGE_dict[vcf_file] = vcf_records
 					print "%s contain the following BRCA1_SGE_variants:" % vcf_file
 					print str(record)
 				else:
 					continue
 
-		C01_sample_SGE_dict[vcf_file] = vcf_records
+		#C01_sample_SGE_dict[vcf_file] = vcf_records
 	
 	if output:
 		with open (output, "w+") as output_file:
-			json.dump(C01_sample_SGE_dict, output_file)
+			for sample in C01_sample_SGE_dict.keys():
+				output_file.write("%s" % sample)
 
-	print C01_sample_SGE_dict.keys()
+	#print C01_sample_SGE_dict.keys()
 	return output_file
 
 def main(runfolder, csv_file, SGE_dict_file, C01sample_file):
