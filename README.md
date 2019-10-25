@@ -2,22 +2,22 @@
   - By Tengyue Zheng
   - 24/10/2019
 
-##Description
+## Description
   Annotate vcfs containing BRCA1 variants present in exon2-5 and exon15-23 with function scores and class.
   Note: At the time of writing, because the clinical pool pipeline is planning to be moved to the trust cluster and changed to snakemake workflow, the software will be made to work in python3.5, and will be made available for integration with the new clinical pool pipeline instead.
 
-##Getting Started
+## Getting Started
   1. Start by cloning the git repository into your working directory
   2. To clone git repository go here: https://gitlab.com/cuhbioinformatics/hiv_pipeline.git
   3. The vcfs files initially used for testing are available upon request by email: tengyue.zheng@addenbrookes.nhs.uk.
 
-##Abbreviations
+## Abbreviations
 
   1. work_dir - working directory where the software is installed
   2. runfolder - directory where the vcfs are stored
   3. root - path of parent directories to working directory or runfolder
 
-##Prerequisites
+## Prerequisites
   1. You need the following software and versions before you can run your script
   
   - python version 3.5
@@ -39,12 +39,12 @@
   - compare_CP2SGE.py
   - remove_INFO_field.py
 
-##Unit testing scripts:
+## Unit testing scripts:
 
   - test_BRCA1_SGE_ref.py
   - test_BRCA1_SGE_vcf_annotator.py
 
-##Reference files
+## Reference files
 
 ## User Requirements:
   Add function scores and class for BRCA1 variants from the Findlay et 2018 paper to C01####.vcf files. 
@@ -77,7 +77,7 @@ ml python3.5 samtools/1.5 bcftools/1.7
 4. To annotate a vcf for a specific runfolder execute the following
 
 ```Bash
-$  python3.5 work_dir/bin/BRCA2_SGE_vcf_annotator.py /data/BRCA1_ref.vcf .
+$  python3.5 work_dir/bin/BRCA1_SGE_vcf_annotator.py /data/BRCA1_ref.vcf .
 ```
 
 5. To check that the annotation is being processed by assessing the output on command line
@@ -85,17 +85,17 @@ $  python3.5 work_dir/bin/BRCA2_SGE_vcf_annotator.py /data/BRCA1_ref.vcf .
 It should display the information about annotation and what files are being generated see below:
 
 ```Bash
-creating header file
-header file already exists
-sorted reference vcf already exists
-bgzip file /root/runfolder/BRCA1_SGE_ref.BRCA1_annotated.sorted.vcf.gz already exists
-tabix file /root/runfolder/BRCA1_SGE_ref.BRCA1_annotated.sorted.vcf.gz.tbi already exists
-merged_bgzip file already exists
-merged tabix file already exists
-bgzipping /root/work_dir/<sample>.vcf
-indexing /root/work_dir/<sample>.vcf.gz
-create new vcf with additional BRCA1 annotation
-annotated vcf: /mnt/scratch/data/TZ/BRCA1_annotation/test_data/artificial_vcfs/C01_neg13.BRCA1_annotated.vcf
+$ creating header file
+$ header file already exists
+$ sorted reference vcf already exists
+$ bgzip file /root/runfolder/BRCA1_SGE_ref.BRCA1_annotated.sorted.vcf.gz already exists
+$ tabix file /root/runfolder/BRCA1_SGE_ref.BRCA1_annotated.sorted.vcf.gz.tbi already exists
+$ merged_bgzip file already exists
+$ merged tabix file already exists
+$ bgzipping /root/work_dir/<sample>.vcf
+$ indexing /root/work_dir/<sample>.vcf.gz
+$ create new vcf with additional BRCA1 annotation
+$ annotated vcf: /mnt/scratch/data/TZ/BRCA1_annotation/test_data/artificial_vcfs/C01_neg13.BRCA1_annotated.vcf
 ```
 
 6. When the annotation is complete, check that the output files have been generated.
@@ -104,9 +104,8 @@ annotated vcf: /mnt/scratch/data/TZ/BRCA1_annotation/test_data/artificial_vcfs/C
 8. To annotate all vcfs in a specific runfolder execute the following instead of the command in step 4.
 
 ```Bash
-
 $ cd <path/to/runfolder>
-$ echo "sh /mnt/storage/projects/hiv_pipeline_project/scripts/DAPHNE_pipeline_wrapper_fixed_smalt.sh -s <sample_name>" | sh2cluster.pl --reservation=compute006 --partition=long --job-name="hiv_<sample_number>"
+$ python3.5 work/dir/bin/BRCA1_SGE_vcf_annotator.py -f .
 ```
 9. Then follow steps 5-7 in the same way for that sample.
 
