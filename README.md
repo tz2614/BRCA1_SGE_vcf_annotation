@@ -72,7 +72,7 @@ To run the annotation software follow the instructions below:
 2. Load the software required on the trust cluster to run the software
 
 ```Bash
-ml python3.5 samtools/1.5 bcftools/1.7
+$ ml python3.5 samtools/1.5 bcftools/1.7
 ```
 4. To annotate a vcf for a specific runfolder execute the following
 
