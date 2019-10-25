@@ -30,6 +30,8 @@ def remove_INFO(vcf):
 			else:
 				continue
 
+	return new_vcf
+
 def main(vcf):
 
 	remove_INFO(vcf)

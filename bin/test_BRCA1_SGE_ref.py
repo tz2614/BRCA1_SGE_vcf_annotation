@@ -39,7 +39,7 @@ def test_vcf2csv(create_test_csv_dir):
 		lines = csv.reader(csv_file)
 
 		for index, line in enumerate(lines):
-			#for each variant in csv, check that the same variant in vcf is present in csv
+			#for each variant in csv, check that the same variant is present in vcf
 
 			if line[0] != "BRCA1" and index > 2:		
 				
