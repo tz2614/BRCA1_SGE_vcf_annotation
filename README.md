@@ -27,11 +27,11 @@
   2. for samtools and bcftools go to www.htslib.org/download and follow the general instructions to download the tar.bz2 file.
 
   link to the above versions are as follows:
-  samtools version 1.5 - https://github.com/samtools/samtools/releases/download/1.5/samtools-1.5.tar.bz2
-  bcftools version 1.7 - https://github.com/samtools/bcftools/releases/download/1.7/bcftools-1.7.tar.bz2
+  - samtools version 1.5 - https://github.com/samtools/samtools/releases/download/1.5/samtools-1.5.tar.bz2
+  - bcftools version 1.7 - https://github.com/samtools/bcftools/releases/download/1.7/bcftools-1.7.tar.bz2
 
   3. for instructions on how to install bcftools version 1.7 
-  https://cuhbioinformatics.atlassian.net/wiki/spaces/BT/pages/577306625/Software+installation+and+version+control+on+Trust+Cluster
+  - URL: https://cuhbioinformatics.atlassian.net/wiki/spaces/BT/pages/577306625/Software+installation+and+version+control+on+Trust+Cluster
 
 ## Main scripts:
   - BRCA1_SGE_ref.py
@@ -95,7 +95,7 @@ $ merged tabix file already exists
 $ bgzipping /root/work_dir/<sample>.vcf
 $ indexing /root/work_dir/<sample>.vcf.gz
 $ create new vcf with additional BRCA1 annotation
-$ annotated vcf: /mnt/scratch/data/TZ/BRCA1_annotation/test_data/artificial_vcfs/C01_neg13.BRCA1_annotated.vcf
+$ annotated vcf: /root/runfolder/<sample>.BRCA1_annotated.vcf
 ```
 
 6. When the annotation is complete, check that the output files have been generated.
