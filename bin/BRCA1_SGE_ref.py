@@ -10,25 +10,26 @@ import datetime
 
 def create_ref_vcf(excel_table):
 
-	"""Create a BRCA1 reference .vcf file containing the BRCA1 SGE score (posterior probability) and class 
+	"""Create a BRCA1 reference .vcf file containing the function score (log2 scaled) and class 
 	of 3893 BRCA1 SNVs in the https://www.nature.com/articles/s41586-018-0461-z#Sec9"""
 
 	timestamp = "_".join(str(datetime.datetime.now()).split(" "))
 	excel_table = os.path.abspath(excel_table)
 	supplementary_table_path = os.path.dirname(excel_table)
-	ref_vcf_path = os.path.join(supplementary_table_path, "BRCA1_SGE_ref_{}.vcf".format(timestamp))
-
+	
 	filedate = str(datetime.date.today())
 	filedate = "".join(filedate.split("-"))
+
+	ref_vcf_path = os.path.join(supplementary_table_path, "BRCA1_SGE_ref_{}.vcf".format(filedate))
 
 	# write header for the BRCA1_SGE_ref.vcf
 
 	with open(ref_vcf_path, "w") as vcf_file:
-		vcf_file.writelines('##fileformat=VCFv4.0\n')
+		vcf_file.writelines('##fileformat=VCFv4.1\n')
 		vcf_file.writelines('##fileDate={}\n'.format(filedate))
 		vcf_file.writelines('##reference=hg19\n')
 		vcf_file.writelines('##contig=<ID=17,length=81195210>\n')
-		vcf_file.writelines('##INFO=<ID=BRCA1_SGE,Number=.,Type=String,Description="BRCA1_SGE_score and BRCA1_SGE_class. Format: allele|score|class">\n')
+		vcf_file.writelines('##INFO=<ID=BRCA1_SGE,Number=A,Type=String,Description="BRCA1_SGE_score and BRCA1_SGE_class. Format: allele|score|class">\n')
 		vcf_file.writelines('#CHROM\tPOS\tID\tREF\tALT\tQUAL\tFILTER\tINFO\n')
 		
 	# equate the data columns from excelsheet to the 8 fixed fields in vcf, CHROM=chromosome number, POS=position(hg19),
@@ -57,7 +58,7 @@ def create_ref_vcf(excel_table):
 						ref = column_index
 					elif field == "alt":
 						alt = column_index
-					elif field == "p.nonfunctional":
+					elif field == "function.score.mean":
 						SGE_score = column_index
 					elif field == "func.class":
 						SGE_class = column_index
@@ -72,7 +73,7 @@ def create_ref_vcf(excel_table):
 					ALT = fields[alt]
 					QUAL = "."
 					FILTER = "."
-					score = abs(float(fields[SGE_score]))
+					score = float(fields[SGE_score])
 					func_class = fields[SGE_class]
 					BRCA1_SGE = "{}|{}|{}".format(ALT, score, func_class)
 

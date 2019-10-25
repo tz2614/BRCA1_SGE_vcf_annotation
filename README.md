@@ -67,13 +67,14 @@ To run the annotation software follow the instructions below:
 1. check to the content of the git repository you have cloned, make sure it includes the main scripts and testing scripts above, and
    the reference files containing the BRCA1 variants with function scores and class.
 
-1. Navigate to the runfolder where the vcf files are stored, the files should be in the format C01XXXX.vcf
+2. Navigate to the runfolder where the vcf files are stored, the files should be in the format C01XXXX.vcf
 
-2. Load the software required on the trust cluster to run the software
+3. Load the software required on the trust cluster to run the software
 
 ```Bash
 $ ml python3.5 samtools/1.5 bcftools/1.7
-```
+``` 
+
 4. To annotate a vcf for a specific runfolder execute the following
 
 ```Bash
@@ -101,12 +102,4 @@ $ annotated vcf: /root/runfolder/<sample>.BRCA1_annotated.vcf
 6. When the annotation is complete, check that the output files have been generated.
    If in doubt consult Tengyue Zheng or senior member of the bioinformatics team.
 
-8. To annotate all vcfs in a specific runfolder execute the following instead of the command in step 4.
-
-```Bash
-$ cd <path/to/runfolder>
-$ python3.5 work/dir/bin/BRCA1_SGE_vcf_annotator.py -f .
-```
-9. Then follow steps 5-7 in the same way for that sample.
-
-For a break down of the workflow of the pipeline please see BRCA1_SGE_workflow.jpg in the repository
+For a break down of the workflow of the pipeline please see workflow_to_annotate_BRCA1_variants(for_reference_file).png and workflow_to_annotate_BRCA1_variants(for_vcf_file).png in the repository

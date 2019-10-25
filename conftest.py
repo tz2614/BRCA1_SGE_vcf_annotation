@@ -20,10 +20,12 @@ neg_annotated_vcf_filename = "neg_variants.annotated.vcf"
 # reference file types used to annotate vcf files with BRCA1_SGE annotations
 
 ref_csv = "41586_2018_461_MOESM3_ESM.csv"
-ref_vcf = "BRCA1_SGE_ref.vcf"
-ref_vcf_gz = "BRCA1_SGE_ref.vcf.gz"
-ref_vcf_gz_tbi = "BRCA1_SGE_ref.vcf.gz.tbi"
-ref_vcf_hdr = "BRCA1_SGE_ref.vcf.hdr"
+ref_vcf = "BRCA1_SGE_ref_20191025.vcf"
+ref_vcf_gz = "BRCA1_SGE_ref_20191025.vcf.gz"
+ref_vcf_gz_tbi = "BRCA1_SGE_ref_20191025.vcf.gz.tbi"
+ref_vcf_hdr = "BRCA1_SGE_ref_20191025.vcf.hdr"
+merged_vcf_gz = "BRCA1_SGE_ref_20191025.INFO_removed.BRCA1_annotated.sorted.vcf.merged.gz"
+merged_vcf_gz_tbi = "BRCA1_SGE_ref_20191025.INFO_removed.BRCA1_annotated.sorted.vcf.merged.gz.tbi"
 
 # declare current directory
 current_directory = os.getcwd()
@@ -84,18 +86,24 @@ def create_test_work_dir():
 	org_ref_vcf = os.path.join(working_files_dir, ref_vcf)
 	org_ref_vcf_gz = os.path.join(working_files_dir, ref_vcf_gz)
 	org_ref_vcf_gz_tbi = os.path.join(working_files_dir, ref_vcf_gz_tbi)
+	org_merged_vcf_gz = os.path.join(working_files_dir, merged_vcf_gz)
+	org_merged_vcf_gz_tbi = os.path.join(working_files_dir, merged_vcf_gz_tbi)
 	
 	new_ref_hdr = os.path.join(test_work_dir, ref_vcf_hdr)
 	new_ref_vcf = os.path.join(test_work_dir, ref_vcf)
 	new_ref_vcf_gz = os.path.join(test_work_dir, ref_vcf_gz)
 	new_ref_vcf_gz_tbi = os.path.join(test_work_dir, ref_vcf_gz_tbi)
+	new_merged_vcf_gz = os.path.join(test_work_dir, merged_vcf_gz)
+	new_merged_vcf_gz_tbi = os.path.join(test_work_dir, merged_vcf_gz_tbi)
 	
 	shutil.copyfile(org_ref_hdr, new_ref_hdr)
 	shutil.copyfile(org_ref_vcf, new_ref_vcf)
 	shutil.copyfile(org_ref_vcf_gz, new_ref_vcf_gz)
 	shutil.copyfile(org_ref_vcf_gz_tbi, new_ref_vcf_gz_tbi)
+	shutil.copyfile(org_merged_vcf_gz, new_merged_vcf_gz)
+	shutil.copyfile(org_merged_vcf_gz_tbi, new_merged_vcf_gz_tbi)
 
-	yield test_work_dir, new_ref_hdr, new_ref_vcf, new_ref_vcf_gz, new_ref_vcf_gz_tbi # This gets passed to the test function
+	yield test_work_dir, new_ref_hdr, new_ref_vcf, new_ref_vcf_gz, new_ref_vcf_gz_tbi, new_merged_vcf_gz, new_merged_vcf_gz_tbi # This gets passed to the test function
 
 	# This runs after the test function is complete to clean up
 	# It deletes the test directory we created and anything it contains

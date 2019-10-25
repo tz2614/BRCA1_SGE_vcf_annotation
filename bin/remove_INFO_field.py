@@ -3,32 +3,37 @@
 import sys
 import os
 
-"""remove INFO field in vcf files"""
+"""remove INFO field in vcf file"""
 
 def remove_INFO(vcf):
 	
 	dir_path = os.path.dirname(vcf)
 	vcf_filename = os.path.basename(vcf)
 	new_vcf_filename = vcf_filename.replace(".vcf", ".INFO_removed.vcf")
-
 	new_vcf = os.path.join(dir_path, new_vcf_filename)
 	
-	with open(vcf, "r") as vcf_file:
+	if os.path.exists(new_vcf):
+		print ("info field in ref vcf already removed")
+		return new_vcf
+	else:
+		with open(vcf, "r") as vcf_file:
 		
-		for line in vcf_file:
-			
-			if line.startswith("#"):
-				with open (new_vcf, "a") as new_vcf_file:
-					new_vcf_file.writelines(line)
+			for line in vcf_file:
+				
+				if line.startswith("#"):
+					with open (new_vcf, "a") as new_vcf_file:
+						new_vcf_file.writelines(line)
 
-			elif line.startswith("17"):
-				fields = line.split("\t")
-				line = line.replace(fields[-1], "") + "\n"
-				with open (new_vcf, "a") as new_vcf_file:
-					new_vcf_file.writelines(line)
-			
-			else:
-				continue
+				elif line.startswith("17"):
+					fields = line.split("\t")
+					line = line.replace(fields[-1], "") + "\n"
+					with open (new_vcf, "a") as new_vcf_file:
+						new_vcf_file.writelines(line)
+				
+				else:
+					continue
+
+	return new_vcf
 
 def main(vcf):
 

@@ -8,8 +8,7 @@ import shutil
 
 def test_vcf2csv(create_test_csv_dir):
 
-	""" make the BRCA1_ref_vcf using the create_ref_vcf function from BRCA1_SGE_vcf_annotator, 
-	and check the variants match between vcf and csv files"""
+	""" make the BRCA1_ref_vcf using the create_ref_vcf function, check the variants match between vcf and csv files"""
 
 	test_csv_dir, new_ref_csv = create_test_csv_dir
 	new_ref_vcf = BRCA1_SGE_ref.create_ref_vcf(new_ref_csv)
