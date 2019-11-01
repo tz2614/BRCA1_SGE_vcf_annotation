@@ -205,19 +205,34 @@ def merge_vcf_variants(ref_vcf, bgzip_file, tabix_file):
 
 def main(ref_csv, vcf_file):
 
-    # use BRCA1_SGE_ref.vcf as reference file containing all the BRCA1_SGE variants to annotate new vcf
+    # convert variants from /path/to/data/41586_2018_461_MOESM3_ESM.csv into ref vcf for downstream annotation
 
     ref_vcf = BRCA1_SGE_ref.create_ref_vcf(ref_csv)
+
+    # convert path to ref vcf to absolute path
     ref_vcf = os.path.abspath(ref_vcf)
+
+    # convert path to vcf_file to absolute path
     vcf_file = os.path.abspath(vcf_file)
+
+    # generate vcf header file using ref vcf
     vcf_header = create_vcf_header(ref_vcf)
+
+    # create bgzip_file, tabix_file for ref vcf
     bgzip_file, tabix_file = sort_bgzip_index(ref_vcf)
-    #remove INFO field in ref vcf to facilitate enable BRCA1_SGE annotations to be added to ref vcf
+
+    # remove INFO field in ref vcf to facilitate enable BRCA1_SGE annotations to be added to ref vcf
     removed_info_ref_vcf = remove_INFO_field.remove_INFO(ref_vcf)
+    
+    # use BRCA1_SGE_ref.vcf.gz as reference file containing all the BRCA1_SGE variants to annotate ref vcf
     annotated_ref_vcf = annotate_ref(bgzip_file, vcf_header, removed_info_ref_vcf)
+
+    # sort the annotated reference vcf, and create bgzip_file and tabix_file
     sorted_annotated_ref_vcf = sort_vcf_file(annotated_ref_vcf)
     ref_bgzip_file = compress_file(sorted_annotated_ref_vcf)
     ref_tabix_file = index_file(ref_bgzip_file)
+
+    # merge multi-allelic variant record in the annotated reference vcf
     merged_bgzip_file, merged_tabix_file = merge_vcf_variants(sorted_annotated_ref_vcf, ref_bgzip_file, ref_tabix_file)
 
     # compress and index existing vcf before annotating vcf file
@@ -234,5 +249,5 @@ if __name__ == "__main__":
 
 # the name of the script "BRCA1_SGE_vcf_annotator.py"
 
-# sys.argv[1] - /path/to/BRCA1_SGE_ref.vcf
+# sys.argv[1] - /path/to/41586_2018_461_MOESM3_ESM.csv
 # sys.argv[2] - /path/to/vcf you wish to annotate
