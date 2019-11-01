@@ -203,10 +203,11 @@ def merge_vcf_variants(ref_vcf, bgzip_file, tabix_file):
 
     return merged_bgzip_file, merged_tabix_file
 
-def main(ref_vcf, vcf_file):
+def main(ref_csv, vcf_file):
 
     # use BRCA1_SGE_ref.vcf as reference file containing all the BRCA1_SGE variants to annotate new vcf
 
+    ref_vcf = BRCA1_SGE_ref.create_ref_vcf(ref_csv)
     ref_vcf = os.path.abspath(ref_vcf)
     vcf_file = os.path.abspath(vcf_file)
     vcf_header = create_vcf_header(ref_vcf)

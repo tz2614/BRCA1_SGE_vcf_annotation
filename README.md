@@ -26,7 +26,7 @@
 
   2. for samtools and bcftools go to www.htslib.org/download and follow the general instructions to download the tar.bz2 file.
 
-  link to the above versions are as follows:
+  - link to the above versions are as follows:
   - samtools version 1.5 - https://github.com/samtools/samtools/releases/download/1.5/samtools-1.5.tar.bz2
   - bcftools version 1.7 - https://github.com/samtools/bcftools/releases/download/1.7/bcftools-1.7.tar.bz2
 
@@ -78,7 +78,7 @@ $ ml python3.5 samtools/1.5 bcftools/1.7
 4. To annotate a vcf for a specific runfolder execute the following
 
 ```Bash
-$  python3.5 work_dir/bin/BRCA1_SGE_vcf_annotator.py /data/BRCA1_ref.vcf .
+$  python3.5 work_dir/bin/BRCA1_SGE_vcf_annotator.py work_dir/data/41586_2018_461_MOESM3_ESM.csv /path/to/<sample>.vcf
 ```
 
 5. To check that the annotation is being processed by assessing the output on command line
