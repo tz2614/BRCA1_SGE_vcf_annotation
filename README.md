@@ -49,16 +49,16 @@
   - /work_dir/data/41586_2018_461_MOESM3_ESM.csv
 
 ## User Requirements:
-  Add function scores and class for BRCA1 variants from the Findlay et 2018 paper to C01####.vcf files. 
+  Add function scores and class for BRCA1 variants from the 41586_2018_461_MOESM3_ESM.csv to C01####.vcf files. 
   Test the annotation tool on vcfs obtained from /data/CP/ on the university cluster and generate a new annotated vcf ready for analysis.
 
   The input file is vcfs that begin with C01####.vcf
 
   The output files for each vcf should include:
 
-  1. <sample>.vcf.gz
-  2. <sample>.vcf.gz.tbi
-  3. <sample>.BRCA1_annotated.vcf
+  1. C01####.vcf.gz
+  2. C01####.vcf.gz.tbi
+  3. C01####.BRCA1_annotated.vcf
 
   within the runfolder the vcf is located.
 
@@ -69,7 +69,7 @@ To run the annotation software follow the instructions below:
 1. check to the content of the git repository you have cloned, make sure it includes the main scripts and testing scripts above, and
    the reference files containing the BRCA1 variants with function scores and class.
 
-2. Navigate to the runfolder where the vcf files are stored, the files should be in the format C01XXXX.vcf
+2. Navigate to the runfolder where the vcf files are stored, the files should be in the format C01####.vcf
 
 3. Load the software required on the trust cluster to run the software
 
