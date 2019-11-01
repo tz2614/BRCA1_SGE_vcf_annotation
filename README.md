@@ -18,7 +18,7 @@
   3. root - path of parent directories to working directory or runfolder
 
 ## Prerequisites
-  1. You need the following software and versions before you can run your script
+  1. You need to have following software installed before you can run your script
   
   - python version 3.5
   - samtools version 1.5
@@ -26,7 +26,7 @@
 
   2. for samtools and bcftools go to www.htslib.org/download and follow the general instructions to download the tar.bz2 file.
 
-  - link to the above versions are as follows:
+      link to the above versions are as follows:
   - samtools version 1.5 - https://github.com/samtools/samtools/releases/download/1.5/samtools-1.5.tar.bz2
   - bcftools version 1.7 - https://github.com/samtools/bcftools/releases/download/1.7/bcftools-1.7.tar.bz2
 
@@ -44,7 +44,9 @@
   - test_BRCA1_SGE_ref.py
   - test_BRCA1_SGE_vcf_annotator.py
 
-## Reference files
+## Reference csv file containing BRCA1_SGE annotations
+
+  - /work_dir/data/41586_2018_461_MOESM3_ESM.csv
 
 ## User Requirements:
   Add function scores and class for BRCA1 variants from the Findlay et 2018 paper to C01####.vcf files. 
