@@ -36,7 +36,6 @@
 ## Main scripts:
   - BRCA1_SGE_ref.py
   - BRCA2_SGE_vcf_annotator.py
-  - compare_CP2SGE.py
   - remove_INFO_field.py
 
 ## Unit testing scripts:

@@ -6,7 +6,7 @@ import pytest
 import os
 import shutil
 
-def test_vcf2csv(create_test_csv_dir):
+def test_create_ref_vcf(create_test_csv_dir):
 
 	""" make the BRCA1_ref_vcf using the create_ref_vcf function, check the variants match between vcf and csv files"""
 
