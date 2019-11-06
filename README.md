@@ -8,12 +8,12 @@
 
 ## Getting Started
   1. Start by cloning the git repository into your working directory
-  2. To clone git repository go here: https://gitlab.com/cuhbioinformatics/hiv_pipeline.git
+  2. To clone git repository go here: https://github.com/tz2614/BRCA1_SGE_vcf_annotation.git or alternatively https://gitlab.com/cuhbioinformatics/brca1_sge_annotation.git
   3. The vcfs files initially used for testing are available upon request by email: tengyue.zheng@addenbrookes.nhs.uk.
 
 ## Abbreviations
 
-  1. work_dir - working directory where the software is installed
+  1. work_dir - working directory where the git repository is cloned
   2. runfolder - directory where the vcfs are stored
   3. root - path of parent directories to working directory or runfolder
 
@@ -34,14 +34,15 @@
   - URL: https://cuhbioinformatics.atlassian.net/wiki/spaces/BT/pages/577306625/Software+installation+and+version+control+on+Trust+Cluster
 
 ## Main scripts:
-  - BRCA1_SGE_ref.py
-  - BRCA2_SGE_vcf_annotator.py
-  - remove_INFO_field.py
+  - bin/BRCA1_SGE_ref.py
+  - bin/BRCA2_SGE_vcf_annotator.py
+  - bin/remove_INFO_field.py
 
 ## Unit testing scripts:
-
-  - test_BRCA1_SGE_ref.py
-  - test_BRCA1_SGE_vcf_annotator.py
+  
+  - conftest.py
+  - bin/test_BRCA1_SGE_ref.py
+  - bin/test_BRCA1_SGE_vcf_annotator.py
 
 ## Reference csv file containing BRCA1_SGE annotations
 
